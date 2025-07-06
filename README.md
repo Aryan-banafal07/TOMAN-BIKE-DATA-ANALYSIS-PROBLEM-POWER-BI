@@ -10,3 +10,42 @@
 
 
 ![image](https://github.com/user-attachments/assets/766c3d98-342e-46c4-8f11-0603f121503f)
+
+
+
+
+# SQL CODE 
+
+select * from bike_share_yr_0;
+select * from bike_share_yr_1;
+
+select season from bike_share_yr_0;
+
+select * from bike_share_yr_0
+union all
+select * from bike_share_yr_1;
+
+
+select * from cost_table;
+
+
+WITH cte AS (
+    SELECT * FROM bike_share_yr_0
+    UNION ALL
+    SELECT * FROM bike_share_yr_1
+)
+SELECT 
+    dteday,
+    season,
+    a.yr,
+    weekday,
+    hr,
+    rider_type,
+    riders,
+    price,
+    COGS,
+    riders * price AS Revenue,
+    (riders * price) - COGS AS profit
+FROM cte a
+LEFT JOIN cost_table b
+    ON a.yr = b.yr;
